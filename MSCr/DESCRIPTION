@@ -1,0 +1,10 @@
+Package: MSCr
+Title: Downloads daily and hourly MSC data. Reads in month x day MSC data.
+Version: 1.02
+Date: 2015-03-30
+Author: Kevin Shook, Centre for Hydrology, University of Saskatchewan
+Maintainer: Kevin Shook <kevin.shook@usask.ca>
+Depends: stringr
+Description: The function downloadMSCobs downloads daily and hourly meteorologial data from the MSC server and creates 3 CRHM .obs files. The first .obs file contains the hourly t, rh, and u values. The second contains the daily minimum, maximum and mean air temepratures. The third contains daily preciptiation. Note that it can take a long time to download all of the data. The function will write to a log file in the working directory decribing the data sources. The function 'readMSCdaily' reads a text file containing MSC month x day data into a dataframe. 
+License: GPL 3
+URL: www.usask.ca/hydrology
