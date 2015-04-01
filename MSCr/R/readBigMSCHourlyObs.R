@@ -1,9 +1,23 @@
-readBigMSCHourlyObs <-
-function(infile, timezone=''){
-  library(CRHMr)
-  # reads large MSC files holding hourly values of several values for serveral locations
-  # and exports an hourly obs data file for each site
-  
+#' Reads large MSC files of hourly values
+#'
+#' @description Reads large MSC files holding hourly values of several values for serveral locations and exports an hourly obs data file for each site
+#' @param infile Required. Name of the file to be read.
+#' @param timezone Optional. The name of the timezone of the data as a character string. This should be YOUR timezone. The default value is "", which is your timezone. You may find a difference in the seconds between using "" and the your timezone. Note that the timezone code is specific to your OS. Under Windows, the code for Central Standard Time is 'America/Regina'. Under Linux, it is 'CST'.
+#' @param quiet Optional. Suppresses display of messages, except for errors. Note that the default is FALSE. If you are calling this function in an R script, you will usually leave quiet=TRUE (i.e. the default). If you are working interactively, you will probably want to set quiet=FALSE.
+#' @param logfile Optional. Name of the file to be used for logging the action. Normally not used. Default is 'MSCr.log'
+#' @return If successful, returns TRUE. If unsuccessful, returns the value FALSE.
+#' @author Kevin Shook
+#' @examples
+#'readBigMSCHourlyObs('GRPextractor_PHW_Bad_Lake_hly_21032015_152943.txt', quiet=FALSE)
+#' @export
+
+readBigMSCHourlyObs <- 
+  function(infile, timezone='', quiet=TRUE, logfile='MSCr.log'){
+  if (infile==''){
+    cat('Error: infile missing\n')
+    return(FALSE)
+  }
+
   met.codes <- c('076', '123','080', '086', '091', '078')
   met.code.names <- c('u', 'p' ,'rh', 'rain', 'snow', 't' )
   
@@ -74,7 +88,8 @@ function(infile, timezone=''){
         all.years <- rep(years, each=24)
     
         # create dates
-        datestrings <- paste(all.years,'-', all.months,'-', all.days,' ', all.hours,':00', sep='')
+        datestrings <- paste(all.years,'-', all.months,'-', all.days,' ', 
+                             all.hours,':00', sep='')
         datetime <- as.POSIXct(datestrings, format='%Y-%m-%d %H:%M', tz=timezone)
         
         # assemble data sets
@@ -135,8 +150,11 @@ function(infile, timezone=''){
        obs$u <- obs$u / 3.6  # convert from km/h to m/s
 
       obs.name <- paste(each.station, '_hourly.obs', sep='')
-      result <- writeObsFile(obs, obs.name, 'obs')
+      result <- writeObsFile(obs, obs.name, 'MSChourlyObs', quiet, logfile)
       rm(obs)
     }
   }
 }
+
+
+

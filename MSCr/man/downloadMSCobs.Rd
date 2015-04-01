@@ -5,20 +5,22 @@
 \title{Downloads monthly and daily MSC data and creates CRHM .obs files.}
 \usage{
 downloadMSCobs(station.name = "", station.number = "", startyear = 1900,
-  endyear = 2000, quiet = FALSE, logfile = "")
+  endyear = 2000, timezone = "", quiet = TRUE, logfile = "MSCr.log")
 }
 \arguments{
-\item{station.name}{Name of the station as a text string. This is used to create a directory that will hold the downloaded files and the created .obs files. It is also the basis for the names of the .obs files: <station.name>Hourly.obs, <station.name>DailyTemps.obs, and <station.name>DailyPrecips.obs}
+\item{station.name}{Name of the station as a text string. This is used to create a directory that will hold the downloaded files and the created .obs files. It is also the basis for the names of the .obs files: <station.name>Hourly.obs, <station.name>DailyTemps.obs, and <station.name>DailyPrecips.obs.}
+
+\item{station.number}{Required,}
 
 \item{startyear}{Optional. First year for downloading. Default is 1900.}
 
 \item{endyear}{Optional Last year for downloading. Default is 2000.}
 
-\item{quiet}{Optional. Suppresses display of messages, except for errors. Note that the default is FALSE If you are calling this function in an R script, you will usually leave quiet=TRUE (i.e. the default). If you are working interactively, you will probably want to set quiet=FALSE.}
+\item{timezone}{Optional. The name of the timezone of the data as a character string. This should be YOUR timezone. The default value is "", which is your timezone. You may find a difference in the seconds between using "" and the your timezone. Note that the timezone code is specific to your OS. Under Windows, the code for Central Standard Time is 'America/Regina'. Under Linux, it is 'CST'.}
 
-\item{logfile}{Optional. Name of the file to be used for logging the action. Normally not used.}
+\item{quiet}{Optional. Suppresses display of messages, except for errors. Note that the default is FALSE. If you are calling this function in an R script, you will usually leave quiet=TRUE (i.e. the default). If you are working interactively, you will probably want to set quiet=FALSE.}
 
-\item{secondaryName}{Required. The name of the secondary CRHM dataframe.}
+\item{logfile}{Optional. Name of the file to be used for logging the action. Normally not used. Default is 'MSCr.log'}
 }
 \value{
 If successful, returns TRUE. If unsuccessful, returns the value FALSE.

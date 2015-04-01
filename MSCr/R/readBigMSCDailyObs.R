@@ -1,8 +1,25 @@
-readBigMSCDailyObs <-
-function(infile, timezone=''){
+#' Reads large MSC files of daily values
+#'
+#' @description Reads large MSC files holding hourly values of several values for serveral locations and exports an hourly obs data file for each site
+#' @param infile Required. Name of the file to be read.
+#' @param timezone Optional. The name of the timezone of the data as a character string. This should be YOUR timezone. The default value is "", which is your timezone. You may find a difference in the seconds between using "" and the your timezone. Note that the timezone code is specific to your OS. Under Windows, the code for Central Standard Time is 'America/Regina'. Under Linux, it is 'CST'.
+#' @param quiet Optional. Suppresses display of messages, except for errors. Note that the default is FALSE. If you are calling this function in an R script, you will usually leave quiet=TRUE (i.e. the default). If you are working interactively, you will probably want to set quiet=FALSE.
+#' @param logfile Optional. Name of the file to be used for logging the action. Normally not used. Default is 'MSCr.log'
+#' @return If successful, returns TRUE. If unsuccessful, returns the value FALSE.
+#' @author Kevin Shook
+#' @examples
+#'readBigMSCDailyObs('GRPextractor_PHW_Bad_Lake_dlyv2_21032015_155647.txt', quiet=FALSE)
+#' @export
+
+readBigMSCDailyObs <- function(infile, quiet=TRUE, logfile='MSCr.log'){
   library(CRHMr)
   # reads large MSC files holding hourly values of several values for serveral locations
   # and exports an hourly obs data file for each site
+  
+  if (infile==''){
+    cat('Error: infile missing\n')
+    return(FALSE)
+  }
   
   met.codes <- c('001', '002','003', '012', '152')
   met.code.names <- c('tmax', 'tmin' ,'tmean', 'ppt', 'windrun' )
@@ -148,7 +165,7 @@ function(infile, timezone=''){
       
       obs$datetime <- paste(obs$datetime, ' 01:00', sep='')
       obs$datetime <- as.POSIXct(obs$datetime, format='%Y-%m-%d %H:%M')
-      result <- writeObsFile(obs, obs.name, 'obs')
+      result <- writeObsFile(obs, obs.name, 'MSCdailyObs', quiet, logfile)
       rm(obs)
     }
   }
