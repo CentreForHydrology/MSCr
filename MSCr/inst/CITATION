@@ -1,0 +1,13 @@
+citHeader("To cite MSCr in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "{MSCr}: a package for reading data from the Meteorological Service of Canada (MSC) webserver and producing obs files for the Cold Regions Hydrological Modelling (CRHM) platform.",
+  author       = personList(as.person("Kevin Shook")),
+  year         = "2015",
+  url          = "www.usask.ca/hydrology/RPkgs.php/",
+
+  textVersion  =
+  paste("Kevin Shook (2015).",
+        "MSCr: a package for reading data from the Meteorological Service of Canada (MSC) webserver and producing obs files for the Cold Regions Hydrological Modelling (CRHM) platform.",
+        "URL www.usask.ca/hydrology/RPkgs.php/.")
+)

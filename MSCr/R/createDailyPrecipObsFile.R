@@ -13,6 +13,5 @@ function(MSC, ObsFile, station.name, station.number, quiet, logfile){
   }
   
   # output info to screen and write to log file
-  writeObsFile(obs.dataframe=ObsData,  obsfile=ObsFile, obsname='DailyPrecipObs',
-                quiet=quiet, logfile=logfile)
+  writeObsFile(obs=ObsData, obsfile=ObsFile, quiet=quiet, logfile=logfile)
 }

@@ -21,6 +21,5 @@ function(MSC, ObsFile, station.name, station.number,  timezone, quiet, logfile){
     ObsData <- ObsData[!dupes,]
   }
   
-writeObsFile(obs.dataframe=ObsData,  obsfile=ObsFile, obsname='HourlyObs',
-             quiet=quiet, logfile=logfile)
+writeObsFile(obs=ObsData, obsfile=ObsFile, quiet=quiet, logfile=logfile)
 }

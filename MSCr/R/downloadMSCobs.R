@@ -1,26 +1,26 @@
 #' Downloads monthly and daily MSC data and creates CRHM .obs files.
 #'
-#' @description Downloads MSC hourly and daily data, one month at a time. The downloaded data are stored as .csv files, which are erased after the function terminates. Information about the .obs files is displayed on the screen and is also written to log files in the working directory. The obs files are: 1) hourly t, rh, and u  2) daily tmin, tmax, tmean and 3) daily precipitation. Because Environment Canada's web data is not consistent in any way, it is possble that using this function will generate warning messages.
-#' @param station.name Name of the station as a text string. This is used to create a directory that will hold the downloaded files and the created .obs files. It is also the basis for the names of the .obs files: <station.name>Hourly.obs, <station.name>DailyTemps.obs, and <station.name>DailyPrecips.obs.
+#' @description Downloads MSC hourly and daily data, one month at a time. The downloaded data are stored as .csv files, which are erased after the function terminates. Information about the .obs files is displayed on the screen and is also written to log files in the working directory. The obs files are: 1) hourly \code{t}, \code{rh}, and \code{u}  2) daily \code{tmin}, \code{tmax}, \code{tmean} and 3) daily precipitation. Because Environment Canada's web data is not consistent in any way, it is possble that using this function will generate warning messages.
+#' @param station.name Name of the station as a text string. This is used to create a directory that will hold the downloaded files and the created .obs files. It is also the basis for the names of the .obs files: \option{<station.name>Hourly.obs}, \option{<station.name>DailyTemps.obs}, and \option{<station.name>DailyPrecips.obs}.
 #' @param station.number Required, 
-#' @param startyear Optional. First year for downloading. Default is 1900.
-#' @param endyear Optional Last year for downloading. Default is 2000.
-#' @param timezone Optional. The name of the timezone of the data as a character string. This should be YOUR timezone. The default value is "", which is your timezone. You may find a difference in the seconds between using "" and the your timezone. Note that the timezone code is specific to your OS. Under Windows, the code for Central Standard Time is 'America/Regina'. Under Linux, it is 'CST'.
-#' @param quiet Optional. Suppresses display of messages, except for errors. Note that the default is FALSE. If you are calling this function in an R script, you will usually leave quiet=TRUE (i.e. the default). If you are working interactively, you will probably want to set quiet=FALSE.
-#' @param logfile Optional. Name of the file to be used for logging the action. Normally not used. Default is 'MSCr.log'
+#' @param startyear Optional. First year for downloading. Default is \code{1900}.
+#' @param endyear Optional. Last year for downloading. Default is \code{2000}.
+#' @param timezone Required. The name of the timezone of the data as a character string. This should be the timezone of your data, but omitting daylight savings time. Note that the timezone code is specific to your OS. To avoid problems, you should use a timezone without daylight savings time. Under Linux, you can use \option{CST} and \option{MST} for Central Standard or Mountain Standard time, respectively. Under Windows or OSX, you can use \option{etc/GMT+6} or \option{etc/GMT+7} for Central Standard and Mountain Standard time. DO NOT use \option{America/Regina} as the time zone, as it includes historical changes between standard and daylight savings time.
+#' @param quiet Optional. Suppresses display of messages, except for errors. If you are calling this function in an R script, you will usually leave \code{quiet=TRUE} (i.e. the default). If you are working interactively, you will probably want to set \code{quiet=FALSE}.
+#' @param logfile Optional.  Optional. Name of the file to be used for logging the action. Normally not used.
 #' @return If successful, returns TRUE. If unsuccessful, returns the value FALSE.
 #' @references The code for downloading MSC data is taken from \url{http://www.fromthebottomoftheheap.net/2015/01/14/harvesting-canadian-climate-data}. Some modifications were made to remove bad characters, and to download daily values.
 #' @author Kevin Shook
 #' @examples
-# This will download data for the Vegreville station for the period 1995-1996
+# This will download data for the Vegreville station (MSC number 1977) for the period 1995-1996
 # It creates a folder \\Vegreville in the working directory which will hold
 # the files VegrevilleHourly.obs, VegrevilleDailyTemps.obs, and VegrevilleDailyPrecips.obs
 # It will also write to the file 'CRHMr.log' in the current directory describing the data sources.
-#'downloadMSCobs('Vegreville', 1977, 1995, 1996)
+#'downloadMSCobs('Vegreville', 1977, 1995, 1996, 'MST')
 #' @export
 
 downloadMSCobs <-
-function(station.name='', station.number='', startyear=1900, endyear=2000, timezone='', quiet=TRUE, logfile='MSCr.log'){
+function(station.name='', station.number='', startyear=1900, endyear=2000, timezone='', quiet=TRUE, logfile=''){
   # creates hourly and daily obs files by dowloading data from MSC server
   
   # check parameters
@@ -30,6 +30,11 @@ function(station.name='', station.number='', startyear=1900, endyear=2000, timez
   }
   if (station.number == ''){
     cat('Error: missing station number\n')
+    return(FALSE)
+  }
+  
+  if (timezone == ''){
+    cat('Error: must specify a timezone\n')
     return(FALSE)
   }
   
@@ -65,9 +70,8 @@ function(station.name='', station.number='', startyear=1900, endyear=2000, timez
       cat('No hourly data available\n')    
   }
   else
-   createHourlyObsFile(hourly, ObsFile, station.name, station.number, 
-                       timezone, quiet, logfile)
-  
+    createHourlyObsFile(hourly, ObsFile, station.name, station.number, timezone, quiet, logfile)
+
  # delete .csv files
   unlink(paste(folder,'/*.csv',sep=''))  
 
