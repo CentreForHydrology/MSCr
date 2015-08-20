@@ -9,10 +9,10 @@
 #' @author Kevin Shook
 #' @examples
 #' \dontrun{
-#'BigMSCToHourlyObs('GRPextractor_PHW_Bad_Lake_hly_21032015_152943.txt', timezone='CST', quiet=FALSE)}
+#'BigMSCHourlyToObs('GRPextractor_PHW_Bad_Lake_hly_21032015_152943.txt', timezone='CST', quiet=FALSE)}
 #' @export
 
-BigMSCToHourlyObs <- function(infile, timezone='', quiet=TRUE, logfile=''){
+BigMSCHourlyToObs <- function(infile, timezone='', quiet=TRUE, logfile=''){
   if (infile == ''){
     cat('Error: infile missing\n')
     return(FALSE)
