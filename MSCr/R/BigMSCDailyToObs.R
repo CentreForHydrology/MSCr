@@ -12,7 +12,6 @@
 #' @export
 
 BigMSCDailyToObs <- function(infile, quiet=TRUE, logfile=''){
-  library(CRHMr)
   # reads large MSC files holding hourly values of several values for serveral locations
   # and exports an hourly obs data file for each site
   
