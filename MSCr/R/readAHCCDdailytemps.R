@@ -23,14 +23,14 @@ readAHCCDdailytemps <-
     split <- str_split_fixed(base, fixed('.'), 2)
     filename <- split[1]
     # check for precip type
-    if (str_detect(filename, ignore.case('dx'))){
+    if (str_detect(tolower(filename), 'dx')){
       temp.type <- 'tmax'
     }
-    else if (str_detect(filename, ignore.case('dm'))){
-      precip.type <- 'tmean'
+    else if (str_detect(tolower(filename), 'dm')){
+      temp.type <- 'tmean'
     }
-    else if (str_detect(filename, ignore.case('dn'))){
-      precip.type <- 'tmin'
+    else if (str_detect(tolower(filename), 'dn')){
+      temp.type <- 'tmin'
     }
     else{
       cat('Error: wrong file type\n')
@@ -50,8 +50,8 @@ readAHCCDdailytemps <-
                     '13','14','15','16','17','18','19','20','21','22','23','24',
                     '25','26','27','28','29','30','31')
   # set up widths to read
-  header <- c(4,3,1)
-  header.classes <- c('character','numeric','character')
+  header <- c(5,3,1)
+  header.classes <- c('numeric','numeric','character')
   
   cols <- rep.int(c(7,1),31)
   cols.classes <- rep.int(c('numeric', 'character'), 31)
@@ -59,7 +59,7 @@ readAHCCDdailytemps <-
   all.classes <- c(header.classes, cols.classes)
   
   # read data
-  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes,skip=2)
+  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes,skip=4)
   row.count <- nrow(raw)
   # now unstack data
   data.row <- 0

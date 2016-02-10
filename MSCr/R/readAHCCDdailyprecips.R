@@ -25,13 +25,13 @@ readAHCCDdailyprecips <-
   split <- str_split_fixed(base, fixed('.'), 2)
   filename <- split[1]
   # check for precip type
-  if (str_detect(filename, ignore.case('dt'))){
+  if (str_detect(tolower(filename), 'dt')){
     precip.type <- 'total'
   }
-  else if (str_detect(filename, ignore.case('dr'))){
+  else if (str_detect(tolower(filename), 'dr')){
     precip.type <- 'rain'
   }
-  else if (str_detect(filename, ignore.case('ds'))){
+  else if (str_detect(tolower(filename), 'ds')){
     precip.type <- 'snow'
   }
   else{
@@ -49,8 +49,8 @@ readAHCCDdailyprecips <-
                     '13','14','15','16','17','18','19','20','21','22','23','24',
                     '25','26','27','28','29','30','31')
   # set up widths to read
-  header <- c(4,3,1)
-  header.classes <- c('character','numeric','character')
+  header <- c(5,3,1)
+  header.classes <- c('numeric','numeric','character')
   
   cols <- rep.int(c(8,1),31)
   cols.classes <- rep.int(c('numeric', 'character'), 31)
@@ -58,7 +58,7 @@ readAHCCDdailyprecips <-
   all.classes <- c(header.classes, cols.classes)
   
   # read data
-  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes,skip=2)
+  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes,skip=4)
   row.count <- nrow(raw)
   # now unstack data
   data.row <- 0
