@@ -49,6 +49,47 @@ readAHCCDdailytemps <-
   twodigitnums <- c('01','02','03','04','05','06','07','08','09','10','11','12',
                     '13','14','15','16','17','18','19','20','21','22','23','24',
                     '25','26','27','28','29','30','31')
+  
+  
+  # figure out header info
+  # read 1st 10 lines
+  con <- file(infile, "r", blocking = FALSE, encoding="ISO_8859-2")
+  input <- readLines(con, n=10)
+  close(con)
+  
+  # find header lines
+  # first find number of lines containing file info
+  input <- tolower(input)
+  LineNum <- str_detect(input, fixed(','))
+  fileHeaderLines <- sum(LineNum)
+  
+  # now find number of lines containing column titles
+  englishLineNum <- str_detect(input, fixed("year"))
+  englishLineCount <- sum(englishLineNum)
+  frenchLineNum <- str_detect(input, fixed("annee"))
+  frenchLineCount <- sum(frenchLineNum)
+  columnHeaderLines <- sum(englishLineCount) + sum(frenchLineCount)
+  
+  totalSkipLines <- fileHeaderLines + columnHeaderLines
+  
+  # check for with of first field - is there a leading space
+  firstChar <- substr(input[totalSkipLines + 1], 1, 1)
+  
+  if (firstChar == ' ')
+    yearWidth <- 5
+  else
+    yearWidth <- 4
+  
+  # set up widths to read
+  header <- c(yearWidth,3,1)
+  header.classes <- c('numeric','numeric','character')
+  
+  cols <- rep.int(c(8,1),31)
+  cols.classes <- rep.int(c('numeric', 'character'), 31)
+  all <- c(header,cols)
+  all.classes <- c(header.classes, cols.classes)
+  
+  
   # set up widths to read
   header <- c(5,3,1)
   header.classes <- c('numeric','numeric','character')
@@ -59,7 +100,7 @@ readAHCCDdailytemps <-
   all.classes <- c(header.classes, cols.classes)
   
   # read data
-  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes,skip=4)
+  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes, skip=totalSkipLines)
   row.count <- nrow(raw)
   # now unstack data
   data.row <- 0
