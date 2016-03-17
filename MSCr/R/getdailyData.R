@@ -56,7 +56,7 @@ function(stations, folder, verbose) {
     
  
     # code added by Kevin Shook to deal with headers having varying numbers of lines
-    if ( win.eol() == '\n')  # i.e. ruuning under Windows
+    if ( win.eol() == '\n')  # i.e. running under Windows
       con <- file(curfile, "r", blocking = FALSE)
     else
       con <- file(curfile, "r", blocking = FALSE, encoding="ISO_8859-2")
