@@ -1,46 +1,23 @@
-#' Reads individual AES files of daily tmin and tmax data in a directory and creates obs files.
-#' @description Reads very old Atmospheric Environment Service (AES) files of daily minimum and maximum air temperatures. The air temperatures may be interpolated to hourly values by reading in the .obs file using the functions \code{readObsFile} and \code{tMinMaxToHourly} in \pkg{CRHMr}.
-#' @param directory Optional. Directory containing AES data files. If not specified, defaults to current directory. Note that this is an R path, which uses the \code{'/'} symbol on ALL operating systems.
-#' @param filespec Optional. File specification (including wildcards) of the tmin data. Default is \option{'A2*'}.
-#' @param timezone Required. The name of the timezone of the data as a character string. This should be the timezone of your data, but omitting daylight savings time. Note that the timezone code is specific to your OS. To avoid problems, you should use a timezone without daylight savings time. Under Linux, you can use \option{CST} and \option{MST} for Central Standard or Mountain Standard time, respectively. Under Windows or OSX, you can use \option{etc/GMT+6} or \option{etc/GMT+7} for Central Standard and Mountain Standard time. DO NOT use \option{America/Regina} as the time zone, as it includes historical changes between standard and daylight savings time.
+#' Creates an obs file from all MSC old-style daily temperature files in a directory 
+#' @description Reads all files of old-style MSC daily soil, min and max air temp. data from a specified directory and assembles them. The values are organized in columns, 1 year per file. Writes a obs file called \option{xx_tminmax.obs}, where \option{xx} is the first 2 characters of \option{filespec}.
+#' @param directory Optional. Directory containing all temperature files. The default is the current directory.
+#' @param filespec Optional. File specification for all files. Default is \option{A1*}.
+#' @param timezone Required.  Required. The name of the timezone of the data as a character string. This should be the timezone of your data, but omitting daylight savings time. Note that the timezone code is specific to your OS. To avoid problems, you should use a timezone without daylight savings time. Under Linux, you can use \option{CST} and \option{MST} for Central Standard or Mountain Standard time, respectively. Under Windows or OSX, you can use \option{etc/GMT+6} or \option{etc/GMT+7} for Central Standard and Mountain Standard time. DO NOT use \option{America/Regina} as the time zone, as it includes historical changes between standard and daylight savings time.
 #'
-#' @return If successful, returns \code{TRUE}. If unsuccessful, returns \code{FALSE}
-#' @author Kevin Shook
-#' @seealso  \code{\link{readAEShourlyRH}} \code{\link{readAEShourlyWind}} \code{\link{readAEShourlyT}} \code{\link{readAESdailyP}}
+#' @return If successful returns \code{TRUE}. If unsuccessful returns \code{FALSE}.
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' readAESdailyTminTmax('./HistoricalData', timezone='etc/GMT+6')
+#' @examples \dontrun{
+#' oldMSCHourlyUtoObs(timezone='Etc/GMT+7')
 #' }
-
-readAESdailyTminTmax <- function(directory, filespec='A2*', timezone=''){
-  
+oldMSCdailyTtoObs <- function(directory='.', filespec='A1*', timezone=''){
   # reads all daily tmin/tmax and assembles a .obs file
   # assumption is that only days with precipitaion were recorded
   
-  # check parameters
-  if (timezone == ''){
-    cat('Error: must specify a timezone\n')
-    return(FALSE)
-  }
-  current_dir <- getwd()
-  if (directory != '')
-    setwd(directory)
-  
-  if (filespec == ''){
-    cat('Error: no file specification\n')
-    return(FALSE)
-  }
-
+  setwd(directory)
   FilePattern <- utils::glob2rx(filespec)
   FileList <- list.files(pattern=FilePattern)
   NumFiles <- length(FileList)
-  
-  if (NumFiles == ''){
-    cat('Error: no files found\n')
-    return(FALSE)
-  }
   
   # extract first 2 charcaters from filespec
   first2 <- substr(filespec, 1, 2)
@@ -90,7 +67,7 @@ readAESdailyTminTmax <- function(directory, filespec='A2*', timezone=''){
     # replace missing values with NA
     all[((all[, 2] < -98) | (all[, 2] > 98)), 2] <- NA_real_
     all[((all[, 3] < -98) | (all[, 3] > 98)), 3] <- NA_real_
-    
+  
     
     
     # stack time series
@@ -104,8 +81,5 @@ readAESdailyTminTmax <- function(directory, filespec='A2*', timezone=''){
   obs <- obs[order(obs$datetime),]
   obs.name <- paste(first2, '_tminmax.obs', sep='')
   result <- CRHMr::writeObsFile(obs, obs.name, 'obs')
-  
-  # return to current directory
-  setwd(current_dir)
   return(result)
 }

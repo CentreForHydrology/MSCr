@@ -20,14 +20,12 @@ readAEShourlyRH <- function(directory='.', timezone=''){
     cat('Error: must specify a timezone\n')
     return(FALSE)
   }
-  current.dir <- getwd()
-  if (file.dir != '')
+  current_dir <- getwd()
+  if (directory != '')
     setwd(directory)
-  else
-    cat('Error: must specify a directory\n')
   
   filespec <- 'RH*'
-  FilePattern <- glob2rx(filespec)
+  FilePattern <- utils::glob2rx(filespec)
   FileList <- list.files(pattern=FilePattern)
   NumFiles <- length(FileList)
   
@@ -49,7 +47,7 @@ readAEShourlyRH <- function(directory='.', timezone=''){
     all.classes <- c(header.classes, cols.classes)
     
     # read data
-    raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes) 
+    raw <- utils::read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes) 
     row.count <- nrow(raw)
     data.cols <- seq(4,27)
     
@@ -93,9 +91,9 @@ readAEShourlyRH <- function(directory='.', timezone=''){
   # sort by data
   obs <- obs[order(obs$datetime),]
   obs.name <- 'rh.obs'
-  result <- writeObsFile(obs, obs.name, 'obs')
+  result <- CRHMr::writeObsFile(obs, obs.name, 'obs')
   
   # return to current directory
-  setwd(current.dir)
+  setwd(current_dir)
   return(result)
 }

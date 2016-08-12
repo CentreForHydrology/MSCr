@@ -1,4 +1,4 @@
-#' Reads hourly precipitation data
+#' Reads hourly Datamart-format precipitation data
 #'
 #' @description Reads hourly precipitation values from a file in the MSC Datamart format (day x hour).
 #' @param infile Required. File to read precipitation from.
@@ -33,7 +33,7 @@ readDatamartHourlyPrecip <- function(infile, timezone=''){
   all.classes <- c(header.classes, cols.classes)
   
   # read data
-  raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes, skip=0)
+  raw <- utils::read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes, skip=0)
   row.count <- nrow(raw)
   
   # now unstack data

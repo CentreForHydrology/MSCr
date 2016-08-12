@@ -11,13 +11,13 @@
 #' readRadarPrecip('junk.num')}
 readRadarPrecip <- function(radarFile='', outputFormat='grid'){
   # check parameters
-  if (radarFile==''){
+  if (radarFile == ''){
     cat('Error: file of radar precip missing\n')
     return(FALSE)
   }
   
-  outputFormat <- str_to_lower(outputFormat)
-  if(str_detect(outputFormat, 'x'))
+  outputFormat <- stringr::str_to_lower(outputFormat)
+  if(stringr::str_detect(outputFormat, 'x'))
     outputFormat <- 'xyz'
   else
     outputFormat <- 'grid'
@@ -29,13 +29,13 @@ readRadarPrecip <- function(radarFile='', outputFormat='grid'){
 
   # get header info
   headerLines <- input[1:19]
-  header <- str_split_fixed(headerLines, ' ', 2)
+  header <- stringr::str_split_fixed(headerLines, ' ', 2)
   header <- as.data.frame(header, stringsAsFactors=FALSE)
   names(header) <- c('Parameter', 'Value')
 
   # get data
   dataLine <- input[20]
-  dataSplit <- str_split_fixed(dataLine, ' ',2)
+  dataSplit <- stringr::str_split_fixed(dataLine, ' ',2)
   precipData <- unlist(str_split(dataSplit[2], ','))
   precipDataWidth <- length(precipData)
 
@@ -66,7 +66,7 @@ readRadarPrecip <- function(radarFile='', outputFormat='grid'){
   lonInc <- (maxDataLon - minDataLon) / (width - 1)
   allData$x <- round((allData$lon - minDataLon) / lonInc) + 1  
   allData$y <- round((allData$lat - minDataLat) / latInc) + 1
-  xyData <- subset(allData, select=c(x, y, precip))
+  xyData <- allData[, c('x', 'y', 'precip')]
   
   # add derived values to header
   header <- rbind(header, c('Min lat', minDataLat))

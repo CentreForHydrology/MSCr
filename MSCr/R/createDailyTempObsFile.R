@@ -1,7 +1,7 @@
 createDailyTempObsFile <-
 function(MSC, ObsFile, station.name, station.number, quiet, logfile){
   # writes dataframe of MSC daily temps to .obs file
-  ObsData <- subset(MSC, select=c(Date.Time, Max.Temp...C., Min.Temp...C., Mean.Temp...C.))
+  ObsData <- MSC[, c('Date.Time', 'Max.Temp...C.', 'Min.Temp...C.', 'Mean.Temp...C.')]
   names(ObsData) <- c('datetime','tmax', 'tmin', 'tmean')
   ObsData$datetime <- as.POSIXct(as.character(ObsData$datetime), format='%Y-%m-%d', tz='')
   ObsData$tmax <- as.numeric(ObsData$tmax)
@@ -16,6 +16,6 @@ function(MSC, ObsFile, station.name, station.number, quiet, logfile){
   }
   # output info to screen and write to log file
 
-  writeObsFile(obs=ObsData,  obsfile=ObsFile, quiet=quiet, logfile=logfile)
+  CRHMr::writeObsFile(obs=ObsData,  obsfile=ObsFile, quiet=quiet, logfile=logfile)
   
 }

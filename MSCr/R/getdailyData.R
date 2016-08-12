@@ -1,5 +1,6 @@
 getdailyData <-
 function(stations, folder, verbose) {
+  eol_char <- CRHMr::win.eol()
   ## form URLS
   urls <- lapply(seq_len(NROW(stations)),
                  function(i, stations) {
@@ -33,7 +34,7 @@ function(stations, folder, verbose) {
   
   ## set up a progress bar if being verbose
   if (isTRUE(verbose)) {
-    pb <- txtProgressBar(min = 0, max = nfiles, style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = nfiles, style = 3)
     on.exit(close(pb))
   }
   
@@ -48,7 +49,7 @@ function(stations, folder, verbose) {
       if (inherits(dload, "try-error")) { # If problem, store failed URL...
         out[[i]] <- URLS[i]
         if (isTRUE(verbose)) {
-          setTxtProgressBar(pb, value = i) # update progress bar...
+          utils::setTxtProgressBar(pb, value = i) # update progress bar...
         }    
         next                             # bail out of current iteration
       }
@@ -56,7 +57,7 @@ function(stations, folder, verbose) {
     
  
     # code added by Kevin Shook to deal with headers having varying numbers of lines
-    if ( win.eol() == '\n')  # i.e. running under Windows
+    if ( eol_char == '\n')  # i.e. running under Windows
       con <- file(curfile, "r", blocking = FALSE)
     else
       con <- file(curfile, "r", blocking = FALSE, encoding="ISO_8859-2")
@@ -64,14 +65,15 @@ function(stations, folder, verbose) {
     close(con)
     # find header
     LineNum <- grep("Date/Time", input, fixed=TRUE)
-    if ( win.eol() == '\n')  # i.e. ruuning under Windows
-      cdata <- try(read.csv(curfile, skip = (LineNum-1), stringsAsFactor=FALSE))
+    if ( eol_char == '\n')  # i.e. ruuning under Windows
+      cdata <- try(utils::read.csv(curfile, skip = (LineNum-1), stringsAsFactor=FALSE))
     else  
-      cdata <- try(read.csv(curfile, skip = (LineNum-1), fileEncoding="ISO_8859-2", stringsAsFactor=FALSE)) 
+      cdata <- try(utils::read.csv(curfile, skip = (LineNum-1), 
+                                   fileEncoding="ISO_8859-2", stringsAsFactor=FALSE)) 
     
     ## Did we have a problem reading the data?
     if (inherits(cdata, "try-error")) { # yes hand read problem
-      file.remove(cur.file)   # remove file if a problem
+      file.remove(curfile)   # remove file if a problem
       out[[i]] <- URLS[i]     # record failed URL...
       if (isTRUE(verbose)) {
         setTxtProgressBar(pb, value = i) # update progress bar...

@@ -11,12 +11,13 @@
 #' @return If successful, returns TRUE. If unsuccessful, returns the value FALSE.
 #' @references The code for downloading MSC data is taken from \url{http://www.fromthebottomoftheheap.net/2015/01/14/harvesting-canadian-climate-data}. Some modifications were made to remove bad characters, and to download daily values.
 #' @author Kevin Shook
-#' @examples
+#' @examples \dontrun{
 # This will download data for the Vegreville station (MSC number 1977) for the period 1995-1996
 # It creates a folder \\Vegreville in the working directory which will hold
 # the files VegrevilleHourly.obs, VegrevilleDailyTemps.obs, and VegrevilleDailyPrecips.obs
 # It will also write to the file 'CRHMr.log' in the current directory describing the data sources.
-#'downloadMSCobs('Vegreville', 1977, 1995, 1996, 'MST')
+#'downloadMSCobs('Vegreville', 1977, 1995, 1996, 'MST')}
+#'
 #' @export
 
 downloadMSCobs <-
@@ -52,7 +53,7 @@ function(station.name='', station.number='', startyear=1900, endyear=2000, timez
                    ' to:', endyear,
                    sep='')  
   
-  result <- logAction(comment, logfile)
+  result <- CRHMr::logAction(comment, logfile)
   
   # get hourly values
   hourly <- getData(stations, folder, verbose = !quiet)

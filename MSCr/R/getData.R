@@ -33,7 +33,7 @@ function(stations, folder, verbose) {
   
   ## set up a progress bar if being verbose
   if (isTRUE(verbose)) {
-    pb <- txtProgressBar(min = 0, max = nfiles, style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = nfiles, style = 3)
     on.exit(close(pb))
   }
   
@@ -44,11 +44,21 @@ function(stations, folder, verbose) {
     
     ## Have we downloaded the file before?
     if (!file.exists(curfile)) {    # No: download it
-      dload <- try(download.file(URLS[i], destfile = curfile, quiet = TRUE))
+      # check OS to find method of downloading
+      if (stringr::str_detect(.Platform$OS.type, stringr::fixed('win',ignore_case=TRUE)))
+        dload <- try(utils::download.file(URLS[i], destfile = curfile, quiet = TRUE, method = 'wininet', 
+                                          extra='--content-disposition'))
+      else
+        dload <- try(utils::download.file(URLS[i], destfile = curfile, quiet = TRUE, method = 'wget', 
+                                          extra='--content-disposition'))
+      
+     
+      
+      
       if (inherits(dload, "try-error")) { # If problem, store failed URL...
         out[[i]] <- URLS[i]
         if (isTRUE(verbose)) {
-          setTxtProgressBar(pb, value = i) # update progress bar...
+          utils::setTxtProgressBar(pb, value = i) # update progress bar...
         }    
         next                             # bail out of current iteration
       }
@@ -57,7 +67,7 @@ function(stations, folder, verbose) {
     ## Must have downloaded, try to read file
     ## skip first 16 rows of header stuff
     ## encoding must be latin1 or will fail
-    cdata <- try(read.csv(curfile, skip = 16, encoding = "latin1", stringsAsFactor=FALSE))
+    cdata <- try(utils::read.csv(curfile, skip = 16, encoding = "latin1", stringsAsFactor=FALSE))
     
     ## Did we have a problem reading the data?
     if (inherits(cdata, "try-error")) { # yes hand read problem

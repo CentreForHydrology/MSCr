@@ -2,7 +2,7 @@ createHourlyObsFile <-
 function(MSC, ObsFile, station.name, station.number,  timezone, quiet, logfile){
   # writes MSC hourly data to .obs file
   
-  ObsData <- subset(MSC, select=c(Date.Time, Temp...C., Rel.Hum...., Wind.Spd..km.h. ))
+  ObsData <- MSC[,c('Date.Time', 'Temp...C.', 'Rel.Hum....', 'Wind.Spd..km.h.')]
     
   # convert time string to POSIX
   ObsData$Date.Time<- as.POSIXct(as.character(ObsData$Date.Time), 
@@ -21,5 +21,5 @@ function(MSC, ObsFile, station.name, station.number,  timezone, quiet, logfile){
     ObsData <- ObsData[!dupes,]
   }
   
-writeObsFile(obs=ObsData, obsfile=ObsFile, quiet=quiet, logfile=logfile)
+   result <- CRHMr::writeObsFile(obs=ObsData, obsfile=ObsFile, quiet=quiet, logfile=logfile)
 }

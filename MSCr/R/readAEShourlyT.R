@@ -1,5 +1,5 @@
 #' Reads individual AES files of hourly air temperature data in a directory and creates obs files.
-#' @description Reads very old Atmospheric Environment Service (AES) files. The files are named \code{TEXXYY}, where XX and YY are the last 2 digits of the beginning and end years in the dataset. All of the files are assembled to create a \code{CRHM} observation file named \option{t.obs} in the same directory as the data files.
+#' @description Reads very old Atmospheric Environment Service (AES) files. The files are named \code{TEXXYY}, where \code{XX} and \code{YY} are the last 2 digits of the beginning and end years in the dataset. All of the files are assembled to create a \code{CRHM} observation file named \option{t.obs} in the same directory as the data files.
 #' @param directory Optional. Directory containing AES data files. If not specified, defaults to current directory. Note that this is an R path, which uses the \code{'/'} symbol on ALL operating systems.
 #' @param timezone Required. The name of the timezone of the data as a character string. This should be the timezone of your data, but omitting daylight savings time. Note that the timezone code is specific to your OS. To avoid problems, you should use a timezone without daylight savings time. Under Linux, you can use \option{CST} and \option{MST} for Central Standard or Mountain Standard time, respectively. Under Windows or OSX, you can use \option{etc/GMT+6} or \option{etc/GMT+7} for Central Standard and Mountain Standard time. DO NOT use \option{America/Regina} as the time zone, as it includes historical changes between standard and daylight savings time.
 #'
@@ -21,12 +21,12 @@ readAEShourlyT <- function(directory='.', timezone=''){
     return(FALSE)
   }
   current.dir <- getwd()
-  if (file.dir != '')
+  if (directory != '')
     setwd(directory)
   else
     cat('Error: must specify a directory\n')
   filespec <- 'TE*'
-  FilePattern <- glob2rx(filespec)
+  FilePattern <- utils::glob2rx(filespec)
   FileList <- list.files(pattern=FilePattern)
   NumFiles <- length(FileList)
   
@@ -49,7 +49,7 @@ readAEShourlyT <- function(directory='.', timezone=''){
     all.classes <- c(header.classes, cols.classes)
     
     # read data
-    raw <- read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes) 
+    raw <- utils::read.fwf(file=infile, widths=all, header=FALSE, colClasses=all.classes) 
     row.count <- nrow(raw)
     data.cols <- seq(4,27)
     
@@ -93,7 +93,7 @@ readAEShourlyT <- function(directory='.', timezone=''){
   # sort by data
   obs <- obs[order(obs$datetime),]
   obs.name <- 't.obs'
-  result <- writeObsFile(obs, obs.name, 'obs')
+  result <- CRHMr::writeObsFile(obs, obs.name, 'obs')
   
   # return to current directory
   setwd(current.dir)

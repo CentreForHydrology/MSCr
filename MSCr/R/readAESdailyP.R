@@ -19,9 +19,10 @@ readAESdailyP <- function(directory='.', filespec ='A0O*', timezone=''){
   # reads all daily precipdata and assembles a .obs file
   # assumption is that only days with precipitaion were recorded
   
+  current_dir <- getwd()
   setwd(directory)
   
-  FilePattern <- glob2rx(filespec)
+  FilePattern <- utils::glob2rx(filespec)
   FileList <- list.files(pattern=FilePattern)
   NumFiles <- length(FileList)
   
@@ -30,7 +31,7 @@ readAESdailyP <- function(directory='.', filespec ='A0O*', timezone=''){
     cat(infile, '\n')
      
     # read data
-    raw <- read.table(file=infile, header=FALSE, skip=7, stringsAsFactors=FALSE)
+    raw <- utils::read.table(file=infile, header=FALSE, skip=7, stringsAsFactors=FALSE)
     
     # collect req'd data
     raw <- raw[,c(1, 5, 6, 9)]
@@ -58,8 +59,8 @@ readAESdailyP <- function(directory='.', filespec ='A0O*', timezone=''){
    
     all <- data.frame(seq(from=first.date, to=last.date, by=1))
     names(all) <- 'date'
-
-    raw <- subset(raw, select=c(date, ppt))
+    raw <- raw[,c('date', 'ppt')]
+    
     # merge
     all <- merge(all, raw, by='date', all.x=TRUE)
     all$date <- format(all$date, format='%Y-%m-%d')
@@ -69,7 +70,7 @@ readAESdailyP <- function(directory='.', filespec ='A0O*', timezone=''){
     all$datetime <- as.POSIXct(all$datetime, format='%Y-%m-%d %H:%M', tz=timezone)
     
     # assemble data sets
-    all <- subset(all, select=c(datetime, ppt))
+    all <- all[, c('datetime', 'ppt')]
 
     # replace missing values
     all[is.na(all[,2]), 2] <- 0
@@ -84,10 +85,10 @@ readAESdailyP <- function(directory='.', filespec ='A0O*', timezone=''){
   # sort by data
   obs <- obs[order(obs$datetime),]
   obs.name <- 'ppt.obs'
-  result <- writeObsFile(obs, obs.name, 'obs')
+  result <- CRHMr::writeObsFile(obs, obs.name, 'obs')
   
   # return to current directory
-  setwd(current.dir)
+  setwd(current_dir)
   return(result)
 }
 
