@@ -1,15 +1,27 @@
-genURLS <-
-function(id, start, end) {
+genURLS <- function(id, start, end, timeframe = c("hourly", "daily", "monthly")) {
   years <- seq(start, end, by = 1)
   nyears <- length(years)
-  years <- rep(years, each = 12)
-  months <- rep(1:12, times = nyears)
- # http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=1706&Year=${year}&Month=${month}&Day=14&timeframe=1&submit= Download+Data"
-  URLS <- paste0("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?",
-                 "format=csv&stationID=", id,
+  timeframe <- match.arg(timeframe)
+  if (isTRUE(all.equal(timeframe, "hourly"))) {
+    years <-  rep(years, each = 12)
+    months <- rep(1:12, times = nyears)
+    ids <- rep(id, nyears * 12)
+  } else if (isTRUE(all.equal(timeframe, "daily"))) {
+    months <- 1                      # this is essentially arbitrary & ignored if daily
+    ids <- rep(id, nyears)
+  } else {
+    years <- start                   # again arbitrary, for monthly it just gives you all data
+    months <- 1                      # and this is also ignored
+    ids <- id
+  }
+  timeframe <- match(timeframe, c("hourly", "daily", "monthly"))
+  URLS <- paste0("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?stationID=", id,
                  "&Year=", years,
                  "&Month=", months,
                  "&Day=14",
-                 "&timeframe=1&submit=%20Download+Data")
-  list(urls = URLS, ids = rep(id, nyears * 12), years = years, months = months)
+                 "&format=csv",
+                 "&timeframe=", timeframe,
+                 "&submit=%20Download+Data"## need this stoopid thing as of 11-May-2016
+  )
+  list(urls = URLS, ids = ids, years = years, months = rep(months, length.out = length(URLS)))
 }

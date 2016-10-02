@@ -1,7 +1,7 @@
 createDailyPrecipObsFile <-
 function(MSC, ObsFile, station.name, station.number, quiet, logfile){
   # writes MSC daily precips to .obs file
-  ObsData <- MSC[,c('Date.Time', 'Total.Precip..mm.')]
+  ObsData <- MSC[,c('Date/Time', 'Total Precip (mm)')]
   names(ObsData) <- c('datetime', 'ppt')
   ObsData$datetime <- as.POSIXct(as.character(ObsData$datetime), format='%Y-%m-%d', tz='')
  

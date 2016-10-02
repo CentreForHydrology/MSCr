@@ -56,15 +56,15 @@ function(station.name='', station.number='', startyear=1900, endyear=2000, timez
   result <- CRHMr::logAction(comment, logfile)
   
   # get hourly values
-  hourly <- getData(stations, folder, verbose = !quiet)
+  hourly <- getData(stations, folder, timeframe='hourly', verbose = !quiet, delete = TRUE)
   ObsFile <- paste(folder,'/',station.name,'Hourly.obs',sep='')
   
   # check for missing hourly data
 
   hourly <- do.call("rbind", hourly)
-  hourly.t.length <- length(na.omit(as.numeric(hourly$Temp..C)))
-  hourly.rh.length <- length(na.omit(as.numeric(hourly$Rel.Hum....)))
-  hourly.u.length <- length(na.omit(as.numeric(hourly$Wind.Spd..km.h.)))
+  hourly.t.length <- length(na.omit(as.numeric(hourly$`Temp (degC)`)))
+  hourly.rh.length <- length(na.omit(as.numeric(hourly$'Rel Hum (%)')))
+  hourly.u.length <- length(na.omit(as.numeric(hourly$"Wind Spd (km/h)")))
   
   if((hourly.t.length==0) & (hourly.rh.length == 0) & (hourly.u.length == 0)){
     if (!quiet)
@@ -73,11 +73,11 @@ function(station.name='', station.number='', startyear=1900, endyear=2000, timez
   else
     createHourlyObsFile(hourly, ObsFile, station.name, station.number, timezone, quiet, logfile)
 
- # delete .csv files
-  unlink(paste(folder,'/*.csv',sep=''))  
+  # delete .csv files
+  unlink(paste(folder,'/*.csv',sep=''))
 
   # get daily values
-  daily <- getdailyData(stations, folder, verbose = !quiet)
+  daily <- getData(stations, folder, timeframe='daily', verbose = !quiet, delete = TRUE)
   daily <- do.call("rbind", daily)
   ObsFile <- paste(folder,'/',station.name,'DailyTemps.obs', sep='')
   createDailyTempObsFile(daily, ObsFile, station.name, station.number, quiet, logfile)

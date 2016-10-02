@@ -2,10 +2,10 @@ createHourlyObsFile <-
 function(MSC, ObsFile, station.name, station.number,  timezone, quiet, logfile){
   # writes MSC hourly data to .obs file
   
-  ObsData <- MSC[,c('Date.Time', 'Temp...C.', 'Rel.Hum....', 'Wind.Spd..km.h.')]
+  ObsData <- MSC[,c('Date/Time', 'Temp (degC)', 'Rel Hum (%)', 'Wind Spd (km/h)')]
     
   # convert time string to POSIX
-  ObsData$Date.Time<- as.POSIXct(as.character(ObsData$Date.Time), 
+  ObsData$'Date/Time' <- as.POSIXct(as.character(ObsData$'Date/Time'), 
                                  format='%Y-%m-%d %H:%M', tz=timezone)
   names(ObsData) <- c('datetime','t','rh','u')
   
