@@ -21,7 +21,7 @@
 #' @importFrom CRHMr writeObsFile logAction win.eol
 #' @importFrom lubridate days_in_month
 #' @importFrom utils read.fwf stack txtProgressBar download.file setTxtProgressBar read.csv
-#' setTxtProgressBar glob2rx read.table
+#' setTxtProgressBar glob2rx read.table write.csv
 #' @importFrom stats aggregate na.omit
 
 NULL

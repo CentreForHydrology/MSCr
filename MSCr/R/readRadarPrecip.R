@@ -1,14 +1,14 @@
-#' Reads MSC radar precipitation.
+#' Reads MSC radar precipitation
 #' @description  Reads in file containing MSC radar precipitation data and adds the missing (zero) values. The data consist of a header, followed by a single line containing the word \option{DATA}  and all of the values, which are comma-delimited.
 #' @param radarFile Required. File containing precipitation data
 #' @param outputFormat Optional. Either \option{grid} (the default) or \option{XYZ}. 
 #'
 #' @return If successful, returns radar data in specified format, which consists of a list containing the header information and either grided (matrix) or XYZ (dataframe) values. The precipitation vaues are in mm/hr. If unsuccessful, returns \code{FALSE}.
+#' @author Kevin Shook
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' readRadarPrecip('junk.num')}
+#' @examples \dontrun{
+#' a <- readRadarPrecip('junk.num')}
 readRadarPrecip <- function(radarFile='', outputFormat='grid'){
   # check parameters
   if (radarFile == ''){

@@ -1,4 +1,4 @@
-#' Reads AHCCD daily temperature values.
+#' Reads AHCCD daily temperature values
 #'
 #' @description This program reads Adjusted and Homogenized Canadian Climate Data (AHCCD) data in a month x day data file of min max or mean air temperatures.
 #' @param infile Required. Name of the file to be read.
