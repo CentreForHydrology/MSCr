@@ -82,6 +82,7 @@ singleACIStoObs <- function(ACISfile='', outDir='', timezone='etc/GMT+7', quiet=
   for (i in 1:stationCount){
     stationLocs <- which(ACIS[,1] == stationNames[i])
     stationObs <- obs[stationLocs,]
+    stationComments <- comments[stationLocs,]
     # change space to underscore in station names
     stationNameClean <- stringr::str_trim(stringr::str_replace(stationNames[i],' ', '_'))
     
@@ -91,7 +92,7 @@ singleACIStoObs <- function(ACISfile='', outDir='', timezone='etc/GMT+7', quiet=
     
     # write variable information
     commentFile <- paste(outDir,'/', stationNameClean, '_comments.csv', sep='')
-    utils::write.csv(comments, file=commentFile, row.names=FALSE)
+    utils::write.csv(cstationComments, file=commentFile, row.names=FALSE)
   }
   return(result)
 }
