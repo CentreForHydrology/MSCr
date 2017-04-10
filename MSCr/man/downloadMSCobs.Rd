@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadMSCobs.R
 \name{downloadMSCobs}
 \alias{downloadMSCobs}
-\title{Downloads monthly and daily MSC data and creates CRHM .obs files.}
+\title{Downloads monthly and daily MSC data and creates CRHM .obs files}
 \usage{
 downloadMSCobs(station.name = "", station.number = "", startyear = 1900,
   endyear = 2000, timezone = "", quiet = TRUE, logfile = "")

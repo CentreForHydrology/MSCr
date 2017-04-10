@@ -2,7 +2,7 @@
 % Please edit documentation in R/readRadarPrecip.R
 \name{readRadarPrecip}
 \alias{readRadarPrecip}
-\title{Reads MSC radar precipitation.}
+\title{Reads MSC radar precipitation}
 \usage{
 readRadarPrecip(radarFile = "", outputFormat = "grid")
 }
@@ -19,6 +19,9 @@ Reads in file containing MSC radar precipitation data and adds the missing (zero
 }
 \examples{
 \dontrun{
-readRadarPrecip('junk.num')}
+a <- readRadarPrecip('junk.num')}
+}
+\author{
+Kevin Shook
 }
 

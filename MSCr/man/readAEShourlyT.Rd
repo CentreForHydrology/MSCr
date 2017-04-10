@@ -2,7 +2,7 @@
 % Please edit documentation in R/readAEShourlyT.R
 \name{readAEShourlyT}
 \alias{readAEShourlyT}
-\title{Reads individual AES files of hourly air temperature data in a directory and creates obs files.}
+\title{Reads individual AES files of hourly air temperature data in a directory and creates obs files}
 \usage{
 readAEShourlyT(directory = ".", timezone = "")
 }

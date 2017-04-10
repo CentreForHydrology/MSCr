@@ -2,7 +2,7 @@
 % Please edit documentation in R/readAHCCDdailyTemps.R
 \name{readAHCCDdailyTemps}
 \alias{readAHCCDdailyTemps}
-\title{Reads AHCCD daily temperature values.}
+\title{Reads AHCCD daily temperature values}
 \usage{
 readAHCCDdailyTemps(infile)
 }
