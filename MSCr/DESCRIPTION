@@ -1,7 +1,7 @@
 Package: MSCr
 Title: Downloads and reads MSC data
-Version: 2.1.3
-Date: 2017-02-15
+Version: 2.1.4
+Date: 2017-04-03
 Author: Kevin Shook, Centre for Hydrology, University of Saskatchewan
 Maintainer: Kevin Shook <kevin.shook@usask.ca>
 Depends: R (>= 3.3)
