@@ -24,4 +24,3 @@ a <- readRadarPrecip('junk.num')}
 \author{
 Kevin Shook
 }
-

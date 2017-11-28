@@ -24,4 +24,3 @@ Reads all files of old-style MSC daily soil, min and max air temp. data from a s
 oldMSCHourlyUtoObs(timezone='Etc/GMT+7')
 }
 }
-

@@ -22,13 +22,12 @@ The AHCCD are often used for statistical analysis, so this function returns a da
 \dontrun{
 stoon.monthly.total <- readAHCCDmonthlyPrecips('mt4057120.txt')}
 }
-\author{
-Kevin Shook
-}
 \references{
 Monthly AHCCD data are available from \url{http://www.ec.gc.ca/dccha-ahccd}. Any use of the precipitation data must cite \cite{Mekis, E and L.A. Vincent, 2011: An overview of the second generation adjusted daily precipitation dataset for trend analysis in Canada. Atmosphere-Ocean, 49 (2), 163-177.}
 }
 \seealso{
 \code{\link{readAHCCDdailyTemps}} \code{\link{readAHCCDdailyPrecips}}
 }
-
+\author{
+Kevin Shook
+}

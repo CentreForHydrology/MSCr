@@ -9,6 +9,6 @@ Imports: CRHMr(>= 2.2.9), lubridate(>= 1.3), utils, stats, stringr
 Description: Functions to download and read in MSC data files.
 License: GPL-3
 URL: www.usask.ca/hydrology
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 NeedsCompilation: no
 Packaged: 2016-05-23 18:31:46 UTC; kevin

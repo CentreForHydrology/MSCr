@@ -21,4 +21,3 @@ Reads hourly precipitation values from a file in the MSC Datamart format (day x 
 \dontrun{
 precip <- readDatamartHourlyPrecip('L1012710.262')}
 }
-

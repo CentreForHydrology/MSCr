@@ -22,13 +22,12 @@ The AHCCD are often used for statistical analysis, so this function returns a da
 \dontrun{
 stoon.tmax <- readAHCCDdailyTemps('dx40657120.txt')}
 }
-\author{
-Kevin Shook
-}
 \references{
 Monthly AHCCD data are available from \url{http://www.ec.gc.ca/dccha-ahccd}. Daily values must be requested. Any use of the temperature data must cite \cite{Vincent, L. A., X. L. Wang, E. J. Milewska, H. Wan, F. Yang, and V. Swail , 2012. A second generation of homogenized Canadian monthly surface air temperature for climate trend analysis, J. Geophys. Res., 117, D18110, doi:10.1029/2012JD017859.}
 }
 \seealso{
 \code{\link{readAHCCDdailyTemps}} \code{\link{readAHCCDmonthlyPrecips}}
 }
-
+\author{
+Kevin Shook
+}

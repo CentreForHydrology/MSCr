@@ -22,10 +22,9 @@ Reads very old Atmospheric Environment Service (AES) files. The files are named 
 readAEShourlyWind('./HistoricalData', timezone='etc/GMT+6')
 }
 }
-\author{
-Kevin Shook
-}
 \seealso{
 \code{\link{readAEShourlyRH}}
 }
-
+\author{
+Kevin Shook
+}

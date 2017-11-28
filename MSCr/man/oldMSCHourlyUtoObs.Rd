@@ -22,4 +22,3 @@ Reads all files of old-style MSC hourly wind speed data from a specified directo
 oldMSCHourlyUtoObs(timezone='Etc/GMT+7')
 }
 }
-

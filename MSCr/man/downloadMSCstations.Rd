@@ -29,10 +29,9 @@ The station data frame contains the variables: Name, Province, Climate ID, Stati
 \dontrun{
 MSCstations <- downloadMSCstations(quiet=FALSE)}
 }
-\author{
-Kevin Shook
-}
 \seealso{
 \code{\link{downloadMSCobs}}
 }
-
+\author{
+Kevin Shook
+}

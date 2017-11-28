@@ -33,10 +33,9 @@ Downloads MSC hourly and daily data, one month at a time. The downloaded data ar
 downloadMSCobs('Vegreville', 1977, 1995, 1996, 'MST')}
 
 }
-\author{
-Kevin Shook
-}
 \references{
 The code for downloading MSC data is taken from \url{http://www.fromthebottomoftheheap.net/2015/01/14/harvesting-canadian-climate-data}. Some modifications were made to remove bad characters, and to download daily values.
 }
-
+\author{
+Kevin Shook
+}

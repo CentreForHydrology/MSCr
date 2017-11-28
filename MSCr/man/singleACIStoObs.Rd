@@ -29,4 +29,3 @@ result <- singleACIStoObs('ACISHourlyData-20170209-20170223-PID122537324.csv')}
 \author{
 Kevin Shook
 }
-

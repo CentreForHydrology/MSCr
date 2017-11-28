@@ -23,10 +23,9 @@ Reads large MSC files holding daily values of several variables at several sites
 \dontrun{
 bigMSCdailyToObs('GRPextractor_PHW_Bad_Lake_dlyv2_21032015_155647.txt', quiet=FALSE)}
 }
-\author{
-Kevin Shook
-}
 \seealso{
 \code{\link{bigMSChourlyToObs}}
 }
-
+\author{
+Kevin Shook
+}

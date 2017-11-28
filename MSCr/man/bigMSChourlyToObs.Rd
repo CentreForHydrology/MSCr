@@ -29,4 +29,3 @@ bigMSChourlyToObs('GRPextractor_PHW_Bad_Lake_hly_21032015_152943.txt', timezone=
 Kevin Shook
 #' @seealso  \code{\link{bigMSCdailyToObs}}
 }
-

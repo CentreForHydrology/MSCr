@@ -22,4 +22,3 @@ Reads all files of old-style MSC hourly RH data from a specified directory and a
 oldMSChourlyRHtoObs(timezone='Etc/GMT+7')
 }
 }
-

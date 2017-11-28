@@ -22,4 +22,3 @@ Reads all files of old-style MSC daily precipitation data from a specified direc
 oldMSCdailyPtoObs(timezone='Etc/GMT+7')
 }
 }
-

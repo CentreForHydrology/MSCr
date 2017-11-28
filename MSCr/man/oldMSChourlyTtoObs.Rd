@@ -23,4 +23,3 @@ Reads all files of old-style MSC hourly temperature data from a specified direct
 oldMSChourlyTtoObs(timezone='Etc/GMT+7')
 }
 }
-
