@@ -17,7 +17,7 @@
 #' The CRHM program is described in:\cr
 #'\cite{Pomeroy, John W, D M Gray, T Brown, N Hedstrom, W L Quinton, R J Granger, and S K Carey. 2007. \dQuote{The Cold Regions Hydrological Model : A Platform for Basing Process Representation and Model Structure on Physical Evidence}. Hydrological Processes 21 (19): 2650-2567.}\cr
 #'The CRHM model may be downloaded from \url{http://www.usask.ca/hydrology/CRHM.php}.\cr
-#' @import stringr
+#' @import stringr reshape2
 #' @importFrom CRHMr writeObsFile logAction win.eol distributeP
 #' @importFrom lubridate days_in_month
 #' @importFrom utils read.fwf stack txtProgressBar download.file setTxtProgressBar read.csv

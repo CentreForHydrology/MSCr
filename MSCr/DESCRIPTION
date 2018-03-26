@@ -1,11 +1,11 @@
 Package: MSCr
 Title: Downloads and reads MSC data
-Version: 2.2.1
-Date: 2018-03-18
+Version: 2.3.0
+Date: 2018-03-26
 Author: Kevin Shook, Centre for Hydrology, University of Saskatchewan
 Maintainer: Kevin Shook <kevin.shook@usask.ca>
 Depends: R (>= 3.3)
-Imports: CRHMr(>= 2.2.9), lubridate(>= 1.3), utils, stats, stringr
+Imports: CRHMr(>= 2.2.9), lubridate(>= 1.3), utils, stats, stringr, reshape2
 Description: Functions to download and read in MSC data files.
 License: GPL-3
 URL: www.usask.ca/hydrology
