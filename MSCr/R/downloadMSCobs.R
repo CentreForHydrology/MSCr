@@ -1,4 +1,4 @@
-#' Downloads monthly and daily MSC data and creates CRHM .obs files
+#' Downloads daily and hourly MSC data and creates CRHM .obs files
 #'
 #' @description Downloads MSC hourly and daily data, one month at a time. The downloaded data are stored as .csv files, which are erased after the function terminates. Information about the .obs files is displayed on the screen and is also written to log files in the working directory. The obs files are: 1) hourly \code{t}, \code{rh}, and \code{u}  2) daily \code{tmin}, \code{tmax}, \code{tmean} and 3) daily precipitation. Because Environment Canada's web data is not consistent in any way, it is possble that using this function will generate warning messages.
 #' @param station.name Name of the station as a text string. This is used to create a directory that will hold the downloaded files and the created .obs files. It is also the basis for the names of the .obs files: \option{<station.name>Hourly.obs}, \option{<station.name>DailyTemps.obs}, and \option{<station.name>DailyPrecips.obs}.

@@ -17,7 +17,7 @@ readMSCyearByDay <- function(MSCfile="", station="") {
   }
 
   # read fixed-width file
-  formats <- c("1X", "I7", "1X", "I4", "2X", "F8", "1X", "F9", "1X", "F7", "366F8")
+  formats <- c("1X", "A7", "1X", "I4", "2X", "F8", "1X", "F9", "1X", "F7", "366F8")
 
   # read data
   raw <- utils::read.fortran(file = MSCfile, format = formats)
@@ -38,6 +38,7 @@ readMSCyearByDay <- function(MSCfile="", station="") {
     melted$year, melted$date, melted$value
   )
   names(returned) <- c("station", "latitude", "longitude", "year", "date", "precip")
+  returned$station <- as.character(returned$station)
 
   if (station != "") {
     returned <- returned[returned$station == station, ]
