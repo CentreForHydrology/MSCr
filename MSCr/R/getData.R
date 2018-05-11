@@ -38,7 +38,7 @@ getData <- function(stations, folder, timeframe = c("hourly", "daily", "monthly"
   }
   
   out <- vector(mode = "list", length = nfiles)
-  hourlyNames <- c("Date/Time", "Year", "Month","Day", "Time", "Data Quality",
+  hourlyNames <- c("Date/Time", "Year", "Month","Day", "Time", 
                    "Temp (degC)", "Temp Flag", "Dew Point Temp (degC)",
                    "Dew Point Temp Flag", "Rel Hum (%)", "Rel Hum Flag",
                    "Wind Dir (10s deg)", "Wind Dir Flag", "Wind Spd (km/h)",
@@ -66,7 +66,7 @@ getData <- function(stations, folder, timeframe = c("hourly", "daily", "monthly"
   
   cnames <- switch(timeframe, hourly = hourlyNames, daily = dailyNames, monthly = monthlyNames)
   TIMEFRAME <- match(timeframe, c("hourly", "daily", "monthly"))
-  SKIP <- c(16, 25, 18)[TIMEFRAME]
+  SKIP <- c(15, 24, 17)[TIMEFRAME]
   
   for (i in seq_len(nfiles)) {
     curfile <- fnames[i]

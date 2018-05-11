@@ -17,7 +17,7 @@ readMSCyearByDay <- function(MSCfile="", station="") {
   }
 
   # read fixed-width file
-  formats <- c("1X", "A7", "1X", "I4", "2X", "F8", "1X", "F9", "1X", "F7", "366F8")
+  formats <- c("1X", "A7", "1X", "I4", "2X", "F8", "1X", "F9", "F8", "366F8")
 
   # read data
   raw <- utils::read.fortran(file = MSCfile, format = formats)
