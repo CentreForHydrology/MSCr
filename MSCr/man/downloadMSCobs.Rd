@@ -4,8 +4,9 @@
 \alias{downloadMSCobs}
 \title{Downloads daily and hourly MSC data and creates CRHM .obs files}
 \usage{
-downloadMSCobs(station.name = "", station.number = "", startyear = 1900,
-  endyear = 2000, timezone = "", quiet = TRUE, logfile = "")
+downloadMSCobs(station.name = "", station.number = "",
+  startyear = 1900, endyear = 2000, timezone = "", quiet = TRUE,
+  logfile = "")
 }
 \arguments{
 \item{station.name}{Name of the station as a text string. This is used to create a directory that will hold the downloaded files and the created .obs files. It is also the basis for the names of the .obs files: \option{<station.name>Hourly.obs}, \option{<station.name>DailyTemps.obs}, and \option{<station.name>DailyPrecips.obs}.}
